@@ -5,6 +5,8 @@
 - Souad Gouriach
 - Mathis Gorvien
 
+## Schémtisation de l'architecture :
+![Schéma Architecture](Archi.drawio.png)
 ## Éléments réalisés du cahier des charges :
 
 ## Éléments non réalisés du cahier des charges :
