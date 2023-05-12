@@ -1,0 +1,4 @@
+2023-05-05 16:28:58 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLDataException: Valeur trop longue pour la colonne "DESCRIPTION VARCHAR(255)": "'The origin story of Superman relates that he was born Kal-El on the planet Krypton, before being rocketed to Earth as an infant... (499)"
+Value too long for column "DESCRIPTION VARCHAR(255)": "'The origin story of Superman relates that he was born Kal-El on the planet Krypton, before being rocketed to Earth as an infant... (499)"; SQL statement:
+insert into card (id, affinity, attack, defence, description, energy, family, hp, img_url, name, price, small_img_url, user_id) values (null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) [22001-200]

@@ -1,0 +1,14 @@
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/auth/model/User.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/cards/service/CardService.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/auth/service/UserService.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/cards/model/Card.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/auth/repository/UserRepository.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/auth/controller/UserController.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/cards/controller/CardController.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/GameCardApplication.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/AppConfig.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/trading/controller/TradingController.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/trading/model/Trading.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/trading/repository/TradingRepository.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/trading/service/TradingService.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier2/asi2_gr6/src/main/java/com/asi1/GameCard/cards/repository/CardRepository.java
