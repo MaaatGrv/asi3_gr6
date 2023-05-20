@@ -1,7 +1,7 @@
-package com.asi1.GameCard.auth.controller;
+package com.asi1.GameCard.user.controller;
 
-import com.asi1.GameCard.auth.model.User;
-import com.asi1.GameCard.auth.service.UserService;
+import com.asi1.GameCard.user.model.User;
+import com.asi1.GameCard.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

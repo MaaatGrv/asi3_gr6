@@ -13,9 +13,19 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>GameCard</name>
 	<description>Atelier 1 ASI</description>
+	<packaging>pom</packaging>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
+
+	<modules>
+		<module>AuthMS</module>
+		<module>CardMS</module>
+		<module>TradingMS</module>
+		<module>UserMS</module>
+		<module>Static</module>
+	</modules>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

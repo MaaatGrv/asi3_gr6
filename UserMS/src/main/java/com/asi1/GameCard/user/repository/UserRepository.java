@@ -1,6 +1,6 @@
-package com.asi1.GameCard.auth.repository;
+package com.asi1.GameCard.user.repository;
 
-import com.asi1.GameCard.auth.model.User;
+import com.asi1.GameCard.user.model.User;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,11 +1,11 @@
-package com.asi1.GameCard;
+package com.asi1.GameCard.trading;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
 
 @Configuration
-public class AppConfig {
+public class StaticConfig {
     @Bean
     public RestTemplate restTemplate() {
         return new RestTemplate();

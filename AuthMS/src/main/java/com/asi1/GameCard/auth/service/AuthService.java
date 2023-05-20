@@ -1,7 +1,7 @@
 package com.asi1.GameCard.auth.service;
 
-import com.asi1.GameCard.auth.model.User;
-import com.asi1.GameCard.auth.repository.UserRepository;
+import com.asi1.GameCard.auth.model.Auth;
+import com.asi1.GameCard.auth.repository.AuthRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,32 +9,32 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserService {
+public class AuthService {
 
-    private final UserRepository userRepository;
+    private final AuthRepository userRepository;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public AuthService(AuthRepository userRepository) {
         this.userRepository = userRepository;
     }
 
-    public User createUser(User user) {
+    public Auth createUser(Auth user) {
         return userRepository.save(user);
     }
 
-    public Optional<User> findUserById(Long userId) {
+    public Optional<Auth> findUserById(Long userId) {
         return userRepository.findById(userId);
     }
 
-    public void saveUser(User updatedUser) {
+    public void saveUser(Auth updatedUser) {
         userRepository.save(updatedUser);
     }
 
-    public Optional<User> findUserByLogin(String login) {
+    public Optional<Auth> findUserByLogin(String login) {
         return Optional.ofNullable(userRepository.findByLogin(login));
     }
 
-    public User updateUser(Long id, User user) {
+    public Auth updateUser(Long id, Auth user) {
         if (userRepository.existsById(id)) {
             user.setId(id);
             return userRepository.save(user);
@@ -46,7 +46,7 @@ public class UserService {
         userRepository.deleteById(id);
     }
 
-    public List<User> getAllUsers() {
-        return (List<User>) userRepository.findAll();
+    public List<Auth> getAllUsers() {
+        return (List<Auth>) userRepository.findAll();
     }
 }

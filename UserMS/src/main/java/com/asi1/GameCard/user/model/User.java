@@ -1,4 +1,4 @@
-package com.asi1.GameCard.auth.model;
+package com.asi1.GameCard.user.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

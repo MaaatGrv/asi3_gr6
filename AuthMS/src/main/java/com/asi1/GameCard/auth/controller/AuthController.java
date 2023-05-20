@@ -1,7 +1,7 @@
 package com.asi1.GameCard.auth.controller;
 
-import com.asi1.GameCard.auth.model.User;
-import com.asi1.GameCard.auth.service.UserService;
+import com.asi1.GameCard.auth.model.Auth;
+import com.asi1.GameCard.auth.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,18 +13,18 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class UserController {
+public class AuthController {
 
-    private final UserService userService;
+    private final AuthService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public AuthController(AuthService userService) {
         this.userService = userService;
     }
 
     @PostMapping("/auth")
-    public ResponseEntity<User> login(@RequestBody User loginUser, HttpServletRequest request) {
-        Optional<User> user = userService.findUserByLogin(loginUser.getLogin());
+    public ResponseEntity<Auth> login(@RequestBody Auth loginUser, HttpServletRequest request) {
+        Optional<Auth> user = userService.findUserByLogin(loginUser.getLogin());
         if (user.isPresent() && user.get().getPwd().equals(loginUser.getPwd())) {
             HttpSession session = request.getSession();
             session.setAttribute("user", user.get());
@@ -34,18 +34,18 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<User> register(@RequestBody User user) {
-        Optional<User> existingUser = userService.findUserByLogin(user.getLogin());
+    public ResponseEntity<Auth> register(@RequestBody Auth user) {
+        Optional<Auth> existingUser = userService.findUserByLogin(user.getLogin());
         if (existingUser.isPresent()) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        User newUser = userService.createUser(user);
+        Auth newUser = userService.createUser(user);
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<User> getUser(@PathVariable Long id) {
-        Optional<User> user = userService.findUserById(id);
+    public ResponseEntity<Auth> getUser(@PathVariable Long id) {
+        Optional<Auth> user = userService.findUserById(id);
         if (user.isPresent()) {
             return ResponseEntity.ok(user.get());
         }
@@ -53,10 +53,10 @@ public class UserController {
     }
 
     @PutMapping("/user/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User user) {
-        Optional<User> existingUser = userService.findUserById(id);
+    public ResponseEntity<Auth> updateUser(@PathVariable Long id, @RequestBody Auth user) {
+        Optional<Auth> existingUser = userService.findUserById(id);
         if (existingUser.isPresent()) {
-            User updatedUser = userService.updateUser(id, user);
+            Auth updatedUser = userService.updateUser(id, user);
             return ResponseEntity.ok(updatedUser);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -64,7 +64,7 @@ public class UserController {
 
     @DeleteMapping("/user/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        Optional<User> existingUser = userService.findUserById(id);
+        Optional<Auth> existingUser = userService.findUserById(id);
         if (existingUser.isPresent()) {
             userService.deleteUser(id);
             return ResponseEntity.ok().build();
@@ -73,19 +73,19 @@ public class UserController {
     }
 
     @GetMapping("/users")
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.getAllUsers();
+    public ResponseEntity<List<Auth>> getAllUsers() {
+        List<Auth> users = userService.getAllUsers();
         return ResponseEntity.ok(users);
     }
 
     @GetMapping("/auth/user")
-    public ResponseEntity<User> getLoggedInUser(HttpServletRequest request) {
+    public ResponseEntity<Auth> getLoggedInUser(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
-            User sessionUser = (User) session.getAttribute("user");
+            Auth sessionUser = (Auth) session.getAttribute("user");
             if (sessionUser != null) {
                 // Récupérez les informations à jour de l'utilisateur depuis la base de données
-                Optional<User> dbUser = userService.findUserById(sessionUser.getId());
+                Optional<Auth> dbUser = userService.findUserById(sessionUser.getId());
                 if (dbUser.isPresent()) {
                     return ResponseEntity.ok(dbUser.get());
                 } else {
@@ -106,24 +106,24 @@ public class UserController {
     }
 
     @PutMapping("/user/{id}/addmoney")
-    public ResponseEntity<User> addMoney(@PathVariable Long id, @RequestBody Double amount) {
-        Optional<User> existingUser = userService.findUserById(id);
+    public ResponseEntity<Auth> addMoney(@PathVariable Long id, @RequestBody Double amount) {
+        Optional<Auth> existingUser = userService.findUserById(id);
         if (existingUser.isPresent()) {
-            User user = existingUser.get();
+            Auth user = existingUser.get();
             user.setAccount(user.getAccount() + amount);
-            User updatedUser = userService.updateUser(id, user);
+            Auth updatedUser = userService.updateUser(id, user);
             return ResponseEntity.ok(updatedUser);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/user/{id}/removemoney")
-    public ResponseEntity<User> removeMoney(@PathVariable Long id, @RequestBody Double amount) {
-        Optional<User> existingUser = userService.findUserById(id);
+    public ResponseEntity<Auth> removeMoney(@PathVariable Long id, @RequestBody Double amount) {
+        Optional<Auth> existingUser = userService.findUserById(id);
         if (existingUser.isPresent()) {
-            User user = existingUser.get();
+            Auth user = existingUser.get();
             user.setAccount(user.getAccount() - amount);
-            User updatedUser = userService.updateUser(id, user);
+            Auth updatedUser = userService.updateUser(id, user);
             return ResponseEntity.ok(updatedUser);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

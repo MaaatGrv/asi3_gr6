@@ -11,7 +11,7 @@ import javax.persistence.JoinColumn;
 import java.util.List;
 
 @Entity
-public class User {
+public class Auth {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,7 +37,7 @@ public class User {
 
     // Constructeurs, getters et setters
 
-    public User() {
+    public Auth() {
     }
 
     // Ajoutez ici les autres constructeurs, getters et setters pour tous les

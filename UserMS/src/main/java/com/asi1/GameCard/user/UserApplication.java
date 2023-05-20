@@ -1,11 +1,11 @@
-package com.asi1.GameCard;
+package com.asi1.GameCard.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class GameCardApplication {
+public class UserApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(GameCardApplication.class, args);
+		SpringApplication.run(UserApplication.class, args);
 	}
 }

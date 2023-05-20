@@ -1,7 +1,7 @@
-package com.asi1.GameCard.auth.service;
+package com.asi1.GameCard.user.service;
 
-import com.asi1.GameCard.auth.model.User;
-import com.asi1.GameCard.auth.repository.UserRepository;
+import com.asi1.GameCard.user.model.User;
+import com.asi1.GameCard.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
