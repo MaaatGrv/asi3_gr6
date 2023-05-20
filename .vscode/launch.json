@@ -1,21 +1,40 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
             "type": "java",
-            "name": "Current File",
+            "name": "AuthApplication",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "com.asi1.GameCard.auth.AuthApplication",
+            "projectName": "AuthMS"
         },
         {
             "type": "java",
-            "name": "GameCardApplication",
+            "name": "CardApplication",
             "request": "launch",
-            "mainClass": "com.asi1.GameCard.GameCardApplication",
-            "projectName": "GameCard"
+            "mainClass": "com.asi1.GameCard.cards.CardApplication",
+            "projectName": "CardMS"
+        },
+        {
+            "type": "java",
+            "name": "TradingApplication",
+            "request": "launch",
+            "mainClass": "com.asi1.GameCard.trading.TradingApplication",
+            "projectName": "TradingMS"
+        },
+        {
+            "type": "java",
+            "name": "UserApplication",
+            "request": "launch",
+            "mainClass": "com.asi1.GameCard.user.UserApplication",
+            "projectName": "UserMS"
+        },
+        {
+            "type": "java",
+            "name": "StaticApplication",
+            "request": "launch",
+            "mainClass": "com.asi1.GameCard.static.StaticApplication",
+            "projectName": "Static"
         }
     ]
 }
