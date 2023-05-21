@@ -44,8 +44,7 @@ public class CardService {
     }
 
     public List<Card> getCardsToSell() {
-        // TODO: Implement this method
-        return null;
+        return cardRepository.findByUserId(0L);
     }
 
     public List<Card> getAllCards() {

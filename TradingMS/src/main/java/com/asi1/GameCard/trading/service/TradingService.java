@@ -1,53 +1,50 @@
 package com.asi1.GameCard.trading.service;
 
 import com.asi1.GameCard.trading.model.Trading;
+import com.asi1.GameCard.trading.dto.UserDto;
+import com.asi1.GameCard.trading.dto.CardDto;
 import com.asi1.GameCard.trading.repository.TradingRepository;
-import com.asi1.GameCard.cards.model.Card;
-import com.asi1.GameCard.cards.repository.CardRepository;
-import com.asi1.GameCard.auth.model.User;
-import com.asi1.GameCard.auth.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.Optional;
+import java.util.Arrays;
 
 @Service
 public class TradingService {
 
-    private final CardRepository cardRepository;
-    private final UserRepository userRepository;
     private final TradingRepository tradingRepository;
+    private final RestTemplate restTemplate;
 
-    @Autowired
-    public TradingService(CardRepository cardRepository, UserRepository userRepository,
-            TradingRepository tradingRepository) {
-        this.cardRepository = cardRepository;
-        this.userRepository = userRepository;
+    public TradingService(TradingRepository tradingRepository, RestTemplate restTemplate) {
         this.tradingRepository = tradingRepository;
+        this.restTemplate = restTemplate;
     }
 
     public Trading buyCard(Long userId, Long cardId) {
-        Optional<User> user = userRepository.findById(userId);
-        Optional<Card> card = cardRepository.findById(cardId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-        if (user.isPresent() && card.isPresent()) {
-            // Vérifiez si l'utilisateur a suffisamment d'argent pour acheter la carte
-            if (user.get().getAccount() >= card.get().getPrice()) {
-                // Mettre à jour le solde du compte de l'utilisateur
-                user.get().setAccount(user.get().getAccount() - card.get().getPrice());
-                userRepository.save(user.get());
+        ResponseEntity<UserDto> userResponse = restTemplate.exchange("http://gateway/user/" + userId, HttpMethod.GET,
+                entity, UserDto.class);
+        ResponseEntity<CardDto> cardResponse = restTemplate.exchange("http://gateway/card/" + cardId, HttpMethod.GET,
+                entity, CardDto.class);
 
-                // Ajoutez la carte à la liste des cartes de l'utilisateur
-                user.get().getCardList().add(card.get().getId());
-                userRepository.save(user.get());
+        if (userResponse.getStatusCode() == HttpStatus.OK && cardResponse.getStatusCode() == HttpStatus.OK) {
+            UserDto user = userResponse.getBody();
+            CardDto card = cardResponse.getBody();
 
-                // Mettez à jour le userId de la carte et enregistrez la carte
-                card.get().setUserId(userId);
-                cardRepository.save(card.get());
+            if (user.getAccount() >= card.getPrice()) {
+                user.setAccount(user.getAccount() - card.getPrice());
+                user.getCardList().add(card.getId());
+                card.setUserId(userId);
 
-                // Créez et retournez la transaction
+                restTemplate.put("http://gateway/user/", user, UserDto.class);
+                restTemplate.put("http://gateway/card/", card, CardDto.class);
+
                 Trading transaction = new Trading(userId, cardId, "buy");
-                tradingRepository.save(transaction); // Enregistrez la transaction
+                tradingRepository.save(transaction);
                 return transaction;
             }
         }
@@ -55,31 +52,32 @@ public class TradingService {
     }
 
     public Trading sellCard(Long userId, Long cardId) {
-        Optional<User> user = userRepository.findById(userId);
-        Optional<Card> card = cardRepository.findById(cardId);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-        if (user.isPresent() && card.isPresent()) {
-            // Vérifiez si l'utilisateur possède la carte
-            if (user.get().getCardList().contains(card.get().getId())) {
-                // Mettre à jour le solde du compte de l'utilisateur
-                user.get().setAccount(user.get().getAccount() + card.get().getPrice());
-                userRepository.save(user.get());
+        ResponseEntity<UserDto> userResponse = restTemplate.exchange("http://gateway/user/" + userId, HttpMethod.GET,
+                entity, UserDto.class);
+        ResponseEntity<CardDto> cardResponse = restTemplate.exchange("http://gateway/card/" + cardId, HttpMethod.GET,
+                entity, CardDto.class);
 
-                // Retirez la carte de la liste des cartes de l'utilisateur
-                user.get().getCardList().remove(card.get().getId());
-                userRepository.save(user.get());
+        if (userResponse.getStatusCode() == HttpStatus.OK && cardResponse.getStatusCode() == HttpStatus.OK) {
+            UserDto user = userResponse.getBody();
+            CardDto card = cardResponse.getBody();
 
-                // Réinitialisez le userId de la carte et enregistrez la carte
-                card.get().setUserId(0L);
-                cardRepository.save(card.get());
+            if (user.getCardList().contains(card.getId())) {
+                user.setAccount(user.getAccount() + card.getPrice());
+                user.getCardList().remove(card.getId());
+                card.setUserId(0L);
 
-                // Créez et retournez la transaction
+                restTemplate.put("http://gateway/user/", user, UserDto.class);
+                restTemplate.put("http://gateway/card/", card, CardDto.class);
+
                 Trading transaction = new Trading(userId, cardId, "sell");
-                tradingRepository.save(transaction); // Enregistrez la transaction
+                tradingRepository.save(transaction);
                 return transaction;
             }
         }
         return null;
     }
-
 }
