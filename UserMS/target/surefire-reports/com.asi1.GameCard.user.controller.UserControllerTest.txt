@@ -1,16 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.asi1.GameCard.user.controller.UserControllerTest
 -------------------------------------------------------------------------------
-Tests run: 5, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 1.151 s <<< FAILURE! - in com.asi1.GameCard.user.controller.UserControllerTest
-testUpdateUser  Time elapsed: 0.026 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<404>
-	at com.asi1.GameCard.user.controller.UserControllerTest.testUpdateUser(UserControllerTest.java:70)
-
-testCreateUser  Time elapsed: 0.005 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<404>
-	at com.asi1.GameCard.user.controller.UserControllerTest.testCreateUser(UserControllerTest.java:60)
-
-testDeleteUser  Time elapsed: 0.004 s  <<< FAILURE!
-java.lang.AssertionError: Status expected:<200> but was:<404>
-	at com.asi1.GameCard.user.controller.UserControllerTest.testDeleteUser(UserControllerTest.java:77)
-
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.233 s - in com.asi1.GameCard.user.controller.UserControllerTest

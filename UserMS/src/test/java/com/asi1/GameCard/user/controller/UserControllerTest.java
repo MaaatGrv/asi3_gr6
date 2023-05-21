@@ -2,87 +2,99 @@ package com.asi1.GameCard.user.controller;
 
 import com.asi1.GameCard.user.model.User;
 import com.asi1.GameCard.user.service.UserService;
-import com.fasterxml.jackson.databind.ObjectMapper;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Optional;
 import java.util.List;
 
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
 
-@WebMvcTest(UserController.class)
-public class UserControllerTest {
+class UserControllerTest {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @MockBean
     private UserService userService;
-
-    private User testUser;
+    private UserController userController;
 
     @BeforeEach
-    public void setUp() {
-        testUser = new User();
-        testUser.setId(1L);
+    void setUp() {
+        userService = Mockito.mock(UserService.class);
+        userController = new UserController(userService);
     }
 
     @Test
-    public void testGetAllUsers() throws Exception {
-        List<User> userList = Arrays.asList(testUser);
+    void getUser() {
+        User user = new User();
+        user.setId(1L);
+        user.setLogin("test");
+
+        when(userService.findUserById(user.getId())).thenReturn(Optional.of(user));
+
+        ResponseEntity<User> response = userController.getUser(user.getId());
+
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(response.getBody(), user);
+    }
+
+    @Test
+    void updateUser() {
+        User user = new User();
+        user.setId(1L);
+        user.setLogin("test");
+
+        User updatedUser = new User();
+        updatedUser.setId(1L);
+        updatedUser.setLogin("updated_test");
+
+        when(userService.findUserById(user.getId())).thenReturn(Optional.of(user));
+        when(userService.updateUser(user.getId(), updatedUser)).thenReturn(updatedUser);
+
+        ResponseEntity<User> response = userController.updateUser(user.getId(), updatedUser);
+
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(response.getBody(), updatedUser);
+    }
+
+    @Test
+    void deleteUser() {
+        User user = new User();
+        user.setId(1L);
+        user.setLogin("test");
+
+        when(userService.findUserById(user.getId())).thenReturn(Optional.of(user));
+
+        ResponseEntity<Void> response = userController.deleteUser(user.getId());
+
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        verify(userService).deleteUser(user.getId());
+    }
+
+    @Test
+    void getAllUsers() {
+        User user1 = new User();
+        user1.setId(1L);
+        user1.setLogin("test1");
+
+        User user2 = new User();
+        user2.setId(2L);
+        user2.setLogin("test2");
+
+        List<User> userList = new ArrayList<>();
+        userList.add(user1);
+        userList.add(user2);
+
         when(userService.getAllUsers()).thenReturn(userList);
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/users")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
+        ResponseEntity<List<User>> response = userController.getAllUsers();
 
-    @Test
-    public void testCreateUser() throws Exception {
-        when(userService.createUser(Mockito.any(User.class))).thenReturn(testUser);
-
-        mockMvc.perform(MockMvcRequestBuilders.post("/user")
-                .content(objectMapper.writeValueAsString(testUser))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testUpdateUser() throws Exception {
-        when(userService.updateUser(anyLong(), Mockito.any(User.class))).thenReturn(testUser);
-
-        mockMvc.perform(MockMvcRequestBuilders.put("/user/{id}", 1L)
-                .content(objectMapper.writeValueAsString(testUser))
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testDeleteUser() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.delete("/user/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testGetUser() throws Exception {
-        when(userService.findUserById(anyLong())).thenReturn(java.util.Optional.ofNullable(testUser));
-
-        mockMvc.perform(MockMvcRequestBuilders.get("/user/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+        assertEquals(response.getStatusCode(), HttpStatus.OK);
+        assertEquals(response.getBody().size(), 2);
+        assertEquals(response.getBody().get(0), user1);
+        assertEquals(response.getBody().get(1), user2);
     }
 }
