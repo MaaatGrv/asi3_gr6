@@ -70,8 +70,8 @@ public class TradingService {
                 user.getCardList().remove(card.getId());
                 card.setUserId(0L);
 
-                restTemplate.put("http://gateway/user/", user, UserDto.class);
-                restTemplate.put("http://gateway/card/", card, CardDto.class);
+                restTemplate.put("http://gateway/user/" + user.getId(), user, UserDto.class);
+                restTemplate.put("http://gateway/card/" + card.getId(), card, CardDto.class);
 
                 Trading transaction = new Trading(userId, cardId, "sell");
                 tradingRepository.save(transaction);

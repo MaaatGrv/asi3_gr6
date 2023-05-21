@@ -7,34 +7,30 @@ public class TradingDto {
     private Long cardId;
     private String type;
 
-    // Les getters et setters restent inchangés
-
-    public Long getId() {
-        return id;
+    public TradingDto(Long userId, Long cardId, String type) {
+        this.userId = userId;
+        this.cardId = cardId;
+        this.type = type;
     }
 
     public Long getUserId() {
         return userId;
     }
 
-    public Long getCardId() {
-        return cardId;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public void setUserId(Long userId) {
         this.userId = userId;
     }
 
+    public Long getCardId() {
+        return cardId;
+    }
+
     public void setCardId(Long cardId) {
         this.cardId = cardId;
+    }
+
+    public String getType() {
+        return type;
     }
 
     public void setType(String type) {

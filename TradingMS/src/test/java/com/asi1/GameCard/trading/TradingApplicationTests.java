@@ -1,4 +1,4 @@
-package com.asi1.GameCard;
+package com.asi1.GameCard.trading;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
