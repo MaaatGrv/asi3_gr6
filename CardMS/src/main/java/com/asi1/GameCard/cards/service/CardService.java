@@ -2,9 +2,8 @@ package com.asi1.GameCard.cards.service;
 
 import com.asi1.GameCard.cards.model.Card;
 import com.asi1.GameCard.cards.repository.CardRepository;
-import com.asi1.GameCard.auth.model.User;
-import com.asi1.GameCard.auth.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.asi1.GameCard.cards.dto.UserDto;
+import com.asi1.GameCard.cards.client.UserClient;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -17,12 +16,11 @@ import java.util.stream.StreamSupport;
 public class CardService {
 
     private final CardRepository cardRepository;
-    private final UserRepository userRepository;
+    private final UserClient userClient; // remplace UserRepository
 
-    @Autowired
-    public CardService(CardRepository cardRepository, UserRepository userRepository) {
+    public CardService(CardRepository cardRepository, UserClient userClient) {
         this.cardRepository = cardRepository;
-        this.userRepository = userRepository;
+        this.userClient = userClient;
     }
 
     public Card getCard(Long id) {
@@ -59,9 +57,10 @@ public class CardService {
     }
 
     public List<Card> getCardsByUserId(Long userId) {
-        Optional<User> userOptional = userRepository.findById(userId);
+        Optional<UserDto> userOptional = userClient.getUserById(userId); // appel API au lieu d'accéder directement à la
+                                                                         // base de données
         if (userOptional.isPresent()) {
-            User user = userOptional.get();
+            UserDto user = userOptional.get();
             List<Long> cardList = user.getCardList();
             Iterable<Card> cards = cardRepository.findAllById(cardList);
             return StreamSupport.stream(cards.spliterator(), false).collect(Collectors.toList());

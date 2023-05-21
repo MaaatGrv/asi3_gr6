@@ -1,5 +1,7 @@
 /Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier3/asi3_gr6/CardMS/src/main/java/com/asi1/GameCard/cards/repository/CardRepository.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier3/asi3_gr6/CardMS/src/main/java/com/asi1/GameCard/cards/dto/UserDto.java
 /Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier3/asi3_gr6/CardMS/src/main/java/com/asi1/GameCard/cards/service/CardService.java
+/Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier3/asi3_gr6/CardMS/src/main/java/com/asi1/GameCard/cards/client/UserClient.java
 /Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier3/asi3_gr6/CardMS/src/main/java/com/asi1/GameCard/cards/CardConfig.java
 /Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier3/asi3_gr6/CardMS/src/main/java/com/asi1/GameCard/cards/controller/CardController.java
 /Users/mathisgorvien/Library/Mobile Documents/com~apple~CloudDocs/4ETI/S8/ASI/Ateliers/Atelier3/asi3_gr6/CardMS/src/main/java/com/asi1/GameCard/cards/CardApplication.java

@@ -2,7 +2,6 @@ package com.asi1.GameCard.cards.controller;
 
 import com.asi1.GameCard.cards.model.Card;
 import com.asi1.GameCard.cards.service.CardService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +12,6 @@ public class CardController {
 
 	private final CardService cardService;
 
-	@Autowired
 	public CardController(CardService cardService) {
 		this.cardService = cardService;
 	}
