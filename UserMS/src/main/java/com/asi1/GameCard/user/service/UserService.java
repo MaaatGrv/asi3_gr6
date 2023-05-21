@@ -2,8 +2,9 @@ package com.asi1.GameCard.user.service;
 
 import com.asi1.GameCard.user.model.User;
 import com.asi1.GameCard.user.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import com.asi1.GameCard.user.client.AuthClient;
+import com.asi1.GameCard.user.dto.AuthDto;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,10 +13,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final AuthClient authClient;
 
-    @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, AuthClient authClient) {
         this.userRepository = userRepository;
+        this.authClient = authClient;
     }
 
     public User createUser(User user) {
@@ -48,5 +50,16 @@ public class UserService {
 
     public List<User> getAllUsers() {
         return (List<User>) userRepository.findAll();
+    }
+
+    // You can add methods here to communicate with Auth microservice using
+    // authClient
+
+    public AuthDto getLoggedInUser() {
+        return authClient.getLoggedInUser();
+    }
+
+    public void logout() {
+        authClient.logout();
     }
 }
