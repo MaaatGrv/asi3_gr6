@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Ajouter une carte</title>
+    
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/progress.min.css">
+    <link rel="stylesheet" type="text/css" th:href="@{/css/custom.css}" />
+
+    <script type="text/javascript" th:src="@{/lib/jquery-3.3.1.min.js}"></script>
+    <script type="text/javascript" th:src="@{/lib/Semantic-UI-CSS-master/components/progress.min.js}"></script>
+    <script type="text/javascript" th:src="@{/js/submitCard.js}"></script>
+</head>
+<body>
+    <div class="ui five column grid">
+        <div class="row"></div>
+        <div class="column"></div>
+        <div class="column"></div>
+        <div class="column">
+            <form class="ui form" id="cardForm" th:action="@{/create-card}" th:object="${cardForm}" method="POST">
+                <h3 class="ui dividing header">Ajouter une nouvelle carte</h3>
+                <!-- name, description, family, affinity, imgUrl, smallImgUrl, energy, hp, defense, attack, price -->
+                <div class="field">
+                    <label>Nom:</label>
+                    <input id="name" type="text" placeholder="Nom de la carte..." th:field="*{name}" required />
+                </div>
+                <div class="field">
+                    <label>Description:</label>
+                    <textarea id="description" rows="4" cols="50" placeholder="Description de la carte..." th:field="*{description}" required></textarea>
+                </div>
+                <div class="field">
+                    <label>Famille:</label>
+                    <select id="family" th:field="*{family}" required>
+                        <option value="1">Famille 1</option>
+                        <option value="2">Famille 2</option>
+                        <option value="3">Famille 3</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Affinité:</label>
+                    <select id="affinity" th:field="*{affinity}" required>
+                        <option value="1">Affinité 1</option>
+                        <option value="2">Affinité 2</option>
+                        <option value="3">Affinité 3</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Image:</label>
+                    <input id="imgUrl" type="text" placeholder="URL de l'image..." th:field="*{imgUrl}" required />
+                </div>
+                <div class="field">
+                    <label>Image miniature:</label>
+                    <input id="smallImgUrl" type="text" placeholder="URL de l'image miniature..." th:field="*{smallImgUrl}" required />
+                </div>
+                <div class="field">
+                    <label>Energy:</label>
+                    <div class="ui indicating progress" id="energyProgress" data-value="0" data-total="100">
+                        <div class="bar"></div>
+                        <div class="label">0</div>
+                    </div>
+                    <input type="hidden" id="energy" th:field="*{energy}" required />
+                </div>
+                <div class="field">
+                    <label>Points de vie:</label>
+                    <div class="ui indicating progress" id="hpProgress" data-value="0" data-total="100">
+                        <div class="bar"></div>
+                        <div class="label">0</div>
+                    </div>
+                    <input type="hidden" id="hp" th:field="*{hp}" required />
+                </div>
+                <div class="field">
+                    <label>Défense:</label>
+                    <div class="ui indicating progress" id="defenceProgress" data-value="0" data-total="100">
+                        <div class="bar"></div>
+                        <div class="label">0</div>
+                    </div>
+                    <input type="hidden" id="defence" th:field="*{defense}" required />
+                </div>
+                <div class="field">
+                    <label>Attaque:</label>
+                    <div class="ui indicating progress" id="attackProgress" data-value="0" data-total="100">
+                        <div class="bar"></div>
+                        <div class="label">0</div>
+                    </div>
+                    <input type="hidden" id="attack" th:field="*{attack}" required />
+                </div>
+                <div class="field">
+                    <label>Prix:</label>
+                    <input id="price" type="number" placeholder="Prix de la carte..." th:field="*{price}" required />
+                </div>
+                <div class="field">
+                    <button class="ui button" type="submit">Créer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
