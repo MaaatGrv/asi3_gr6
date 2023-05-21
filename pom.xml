@@ -24,6 +24,7 @@
 		<module>TradingMS</module>
 		<module>UserMS</module>
 		<module>Static</module>
+		<module>Gateway</module>
 	</modules>
 
 	<dependencies>

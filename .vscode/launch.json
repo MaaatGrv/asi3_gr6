@@ -35,6 +35,13 @@
             "request": "launch",
             "mainClass": "com.asi1.GameCard.static.StaticApplication",
             "projectName": "Static"
+        },
+        {
+            "type": "java",
+            "name": "GatewayApplication",
+            "request": "launch",
+            "mainClass": "com.asi1.GameCard.gateway.GatewayApplication",
+            "projectName": "Gateway"
         }
     ]
 }
