@@ -79,4 +79,13 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/user/login/{login}")
+    public ResponseEntity<User> getUserByLogin(@PathVariable String login) {
+        Optional<User> user = userService.findUserByLogin(login);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }

@@ -33,7 +33,7 @@ public class UserService {
     }
 
     public Optional<User> findUserByLogin(String login) {
-        return Optional.ofNullable(userRepository.findByLogin(login));
+        return userRepository.findByLogin(login);
     }
 
     public User updateUser(Long id, User user) {

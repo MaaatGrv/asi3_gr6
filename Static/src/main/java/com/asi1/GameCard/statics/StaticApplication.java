@@ -1,4 +1,4 @@
-package com.asi1.GameCard;
+package com.asi1.GameCard.statics;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package com.asi1.GameCard.cards.dto;
+package com.asi1.GameCard.auth.dto;
 
 import java.util.List;
 
@@ -17,7 +17,15 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(List<Long> cardList) {
+    public UserDto(Long id, String login, String pwd, double account, String lastName, String surName, String email,
+            List<Long> cardList) {
+        this.id = id;
+        this.login = login;
+        this.pwd = pwd;
+        this.account = account;
+        this.lastName = lastName;
+        this.surName = surName;
+        this.email = email;
         this.cardList = cardList;
     }
 

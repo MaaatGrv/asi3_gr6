@@ -1,5 +1,5 @@
 // AuthDTO.java
-package com.asi1.GameCard.auth.dto;
+package com.asi1.GameCard.cards.dto;
 
 import java.util.List;
 

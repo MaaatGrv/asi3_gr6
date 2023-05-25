@@ -1,4 +1,4 @@
-package com.asi1.GameCard.trading;
+package com.asi1.GameCard.statics;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
