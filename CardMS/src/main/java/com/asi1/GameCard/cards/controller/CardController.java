@@ -46,13 +46,13 @@ public class CardController {
 		return ResponseEntity.ok().build();
 	}
 
-	@GetMapping("/user/{userId}/cards")
+	@GetMapping("card/user/{userId}")
 	public ResponseEntity<List<Card>> getCardsByUserId(@PathVariable Long userId) {
 		List<Card> cards = cardService.getCardsByUserId(userId);
 		return ResponseEntity.ok(cards);
 	}
 
-	@GetMapping("/cards_to_sell")
+	@GetMapping("/card/sell")
 	public ResponseEntity<List<Card>> getCardsForSale() {
 		List<Card> cards = cardService.getCardsForSale();
 		return ResponseEntity.ok(cards);
