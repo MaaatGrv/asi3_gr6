@@ -14,6 +14,9 @@ public class AuthDto {
 
     // Les getters et setters restent inchangés
 
+    public AuthDto() {
+    }
+
     public Long getId() {
         return id;
     }

@@ -14,6 +14,9 @@ public class UserDto {
 
     // Constructeurs, getters et setters
 
+    public UserDto() {
+    }
+
     public UserDto(Long id, String login, String pwd, double account, String lastName, String surName, String email,
             List<Long> cardList) {
         this.id = id;

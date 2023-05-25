@@ -7,6 +7,9 @@ public class TradingDto {
     private Long cardId;
     private String type;
 
+    public TradingDto() {
+    }
+
     public TradingDto(Long userId, Long cardId, String type) {
         this.userId = userId;
         this.cardId = cardId;

@@ -3,6 +3,7 @@ package com.asi1.GameCard.trading.service;
 import com.asi1.GameCard.trading.model.Trading;
 import com.asi1.GameCard.trading.dto.UserDto;
 import com.asi1.GameCard.trading.dto.CardDto;
+
 import com.asi1.GameCard.trading.repository.TradingRepository;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -26,9 +27,11 @@ public class TradingService {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-        ResponseEntity<UserDto> userResponse = restTemplate.exchange("http://gateway/user/" + userId, HttpMethod.GET,
+        ResponseEntity<UserDto> userResponse = restTemplate.exchange("http://localhost:8090/user/" + userId,
+                HttpMethod.GET,
                 entity, UserDto.class);
-        ResponseEntity<CardDto> cardResponse = restTemplate.exchange("http://gateway/card/" + cardId, HttpMethod.GET,
+        ResponseEntity<CardDto> cardResponse = restTemplate.exchange("http://localhost:8090/card/" + cardId,
+                HttpMethod.GET,
                 entity, CardDto.class);
 
         if (userResponse.getStatusCode() == HttpStatus.OK && cardResponse.getStatusCode() == HttpStatus.OK) {
@@ -40,8 +43,10 @@ public class TradingService {
                 user.getCardList().add(card.getId());
                 card.setUserId(userId);
 
-                restTemplate.put("http://gateway/user/", user, UserDto.class);
-                restTemplate.put("http://gateway/card/", card, CardDto.class);
+                restTemplate.exchange("http://localhost:8090/user/" + user.getId(), HttpMethod.PUT,
+                        new HttpEntity<>(user, headers), UserDto.class);
+                restTemplate.exchange("http://localhost:8090/card/" + card.getId(), HttpMethod.PUT,
+                        new HttpEntity<>(card, headers), CardDto.class);
 
                 Trading transaction = new Trading(userId, cardId, "buy");
                 tradingRepository.save(transaction);
@@ -56,9 +61,11 @@ public class TradingService {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-        ResponseEntity<UserDto> userResponse = restTemplate.exchange("http://gateway/user/" + userId, HttpMethod.GET,
+        ResponseEntity<UserDto> userResponse = restTemplate.exchange("http://localhost:8090/user/" + userId,
+                HttpMethod.GET,
                 entity, UserDto.class);
-        ResponseEntity<CardDto> cardResponse = restTemplate.exchange("http://gateway/card/" + cardId, HttpMethod.GET,
+        ResponseEntity<CardDto> cardResponse = restTemplate.exchange("http://localhost:8090/card/" + cardId,
+                HttpMethod.GET,
                 entity, CardDto.class);
 
         if (userResponse.getStatusCode() == HttpStatus.OK && cardResponse.getStatusCode() == HttpStatus.OK) {
@@ -70,8 +77,10 @@ public class TradingService {
                 user.getCardList().remove(card.getId());
                 card.setUserId(0L);
 
-                restTemplate.put("http://gateway/user/" + user.getId(), user, UserDto.class);
-                restTemplate.put("http://gateway/card/" + card.getId(), card, CardDto.class);
+                restTemplate.exchange("http://localhost:8090/user/" + user.getId(), HttpMethod.PUT,
+                        new HttpEntity<>(user, headers), UserDto.class);
+                restTemplate.exchange("http://localhost:8090/card/" + card.getId(), HttpMethod.PUT,
+                        new HttpEntity<>(card, headers), CardDto.class);
 
                 Trading transaction = new Trading(userId, cardId, "sell");
                 tradingRepository.save(transaction);

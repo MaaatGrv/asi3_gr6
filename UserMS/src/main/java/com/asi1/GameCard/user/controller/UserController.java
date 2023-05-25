@@ -66,4 +66,17 @@ public class UserController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    // Add Money
+    @PutMapping("/user/{id}/add-money")
+    public ResponseEntity<User> addMoney(@PathVariable Long id, @RequestParam("amount") Long amount) {
+        Optional<User> existingUser = userService.findUserById(id);
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
+            user.setAccount(user.getAccount() + amount);
+            userService.saveUser(user);
+            return ResponseEntity.ok(user);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 }
