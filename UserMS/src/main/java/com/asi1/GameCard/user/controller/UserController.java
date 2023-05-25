@@ -1,5 +1,6 @@
 package com.asi1.GameCard.user.controller;
 
+import com.asi1.GameCard.user.dto.CardDto;
 import com.asi1.GameCard.user.model.User;
 import com.asi1.GameCard.user.service.UserService;
 
@@ -86,6 +87,12 @@ public class UserController {
             return ResponseEntity.ok(user.get());
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/user/{userId}/cards")
+    public ResponseEntity<List<CardDto>> getCardsByUserId(@PathVariable Long userId) {
+        List<CardDto> cards = userService.getCardsByUserId(userId);
+        return ResponseEntity.ok(cards);
     }
 
 }

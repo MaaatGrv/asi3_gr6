@@ -1,11 +1,11 @@
 function loadUserCards() {
     $.ajax({
-        url: "/auth/user",
+        url: "http://localhost:8090/auth/user",
         type: "GET",
         success: function(user) {
             if (user && user.id) {
                 $.ajax({
-                    url: "/user/" + user.id + "/cards",
+                    url: "http://localhost:8090/user/" + user.id + "/cards",
                     type: "GET",
                     success: function(cards) {
                         displayCards(cards);
@@ -51,14 +51,14 @@ function displayCards(cards) {
 
 function sellCard(cardId) {
     $.ajax({
-        url: "/auth/user",
+        url: "http://localhost:8090/auth/user",
         type: "GET",
         success: function(user) {
             if (user && user.id) {
                 // Sauvegardez le solde actuel de l'utilisateur avant de vendre la carte
                 var currentAccount = user.account;
                 $.ajax({
-                    url: "/sell-card",
+                    url: "http://localhost:8090/sell-card",
                     type: "POST",
                     data: {
                         userId: user.id,
@@ -121,12 +121,13 @@ $(document).on("click", "#tableContent tr", function() {
 
 function loadCardDetails(cardId) {
     $.ajax({
-        url: "/card/" + cardId,
-        type: "GET",
+        url: "http://localhost:8090/card/" + cardId,
+        type: "GET",       
         success: function(card) {
             updateCard(card);
         },
         error: function(error) {
+            console.log(cardId);
             console.error("Error while fetching card details: ", error);
         }
     });

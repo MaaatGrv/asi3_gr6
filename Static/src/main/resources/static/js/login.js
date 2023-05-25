@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const API_URL_AUTH = '/auth';
-    const API_URL_USER = '/user';
+    const API_URL_AUTH = 'http://localhost:8090/auth';
+    const API_URL_USER = 'http://localhost:8090/user';
 
     const showLoginFormButton = document.getElementById('show-login-form');
     const showRegisterFormButton = document.getElementById('show-register-form');

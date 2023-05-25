@@ -1,6 +1,6 @@
 // Get the user data from the server
 function getUserData() {
-    fetch('/auth/user', {
+    fetch('http://localhost:8090/auth/user', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -25,7 +25,7 @@ function getUserData() {
 
 // Logout function
 function logout() {
-    fetch('/auth/logout', {
+    fetch('http://localhost:8090/auth/logout', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

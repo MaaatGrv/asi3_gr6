@@ -1,6 +1,6 @@
 function loadCardsForSale() {
     $.ajax({
-        url: "/cards_to_sell",
+        url: "http://localhost:8090/cards_to_sell",
         type: "GET",
         success: function(cards) {
             displayCards(cards);
@@ -49,7 +49,7 @@ $(document).on("click", ".buy-button", function() {
 
 function buyCard(cardId) {
     $.ajax({
-        url: "/auth/user",
+        url: "http://localhost:8090/auth/user",
         type: "GET",
         success: function(user) {
             if (user && user.id) {
@@ -109,7 +109,7 @@ $(document).on("click", "#tableContent tr", function() {
 
 function loadCardDetails(cardId) {
     $.ajax({
-        url: "/card/" + cardId,
+        url: "http://localhost:8090/card/" + cardId,
         type: "GET",
         success: function(card) {
             updateCard(card);

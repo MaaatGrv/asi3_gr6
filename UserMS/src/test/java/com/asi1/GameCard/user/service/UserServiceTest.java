@@ -18,7 +18,6 @@ class UserServiceTest {
     @BeforeEach
     void setUp() {
         userRepository = Mockito.mock(UserRepository.class);
-        userService = new UserService(userRepository, null);
     }
 
     @Test
