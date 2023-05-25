@@ -25,6 +25,7 @@
 		<module>UserMS</module>
 		<module>Static</module>
 		<module>Gateway</module>
+		<module>GameMS</module>
 	</modules>
 
 	<dependencies>
