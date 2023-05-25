@@ -1,6 +1,6 @@
 function loadCardsForSale() {
     $.ajax({
-        url: "http://localhost:8090/cards_to_sell",
+        url: "http://localhost:8090/card/sell",
         type: "GET",
         success: function(cards) {
             displayCards(cards);
