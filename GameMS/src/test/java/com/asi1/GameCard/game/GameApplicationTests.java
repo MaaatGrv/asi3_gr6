@@ -1,4 +1,4 @@
-package com.asi1.game.GameApplication;
+package com.asi1.GameCard.game;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -9,5 +9,4 @@ class GameApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }

@@ -1,25 +1,28 @@
 package com.asi1.GameCard.game.controller;
 
-import com.asi1.GameCard.game.model.Game;
-import com.asi1.GameCard.game.model.Room;
 import com.asi1.GameCard.game.service.GameService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/game")
 public class GameController {
 
-    @Autowired
-    private GameService gameService;
+    private final GameService gameService;
 
-    @PostMapping("/room")
-    public Room createRoom(@RequestParam String name, @RequestParam Double bet) {
-        return gameService.createRoom(name, bet);
+    public GameController(GameService gameService) {
+        this.gameService = gameService;
     }
 
-    @PostMapping("/start")
-    public Game startGame(@RequestParam Long roomId, @RequestParam Long cardId1, @RequestParam Long cardId2) {
-        return gameService.startGame(roomId, cardId1, cardId2);
+    @PostMapping("/play/{roomId}")
+    public ResponseEntity<?> playGame(@PathVariable Long roomId) {
+        Long winnerUserId = gameService.playGame(roomId);
+        if (winnerUserId != null) {
+            return ResponseEntity.ok("The game has ended. The winner is user with ID: " + winnerUserId);
+        } else {
+            return ResponseEntity.badRequest()
+                    .body("Failed to play the game. Ensure all players are ready and the game is started.");
+        }
     }
 }
