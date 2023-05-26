@@ -6,7 +6,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/game")
 public class GameController {
 
     private final GameService gameService;
@@ -15,7 +14,7 @@ public class GameController {
         this.gameService = gameService;
     }
 
-    @PostMapping("/play/{roomId}")
+    @PostMapping("/game/play/{roomId}")
     public ResponseEntity<?> playGame(@PathVariable Long roomId) {
         Long winnerUserId = gameService.playGame(roomId);
         if (winnerUserId != null) {

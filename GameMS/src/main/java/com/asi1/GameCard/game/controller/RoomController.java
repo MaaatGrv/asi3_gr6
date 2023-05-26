@@ -3,11 +3,11 @@ package com.asi1.GameCard.game.controller;
 import com.asi1.GameCard.game.model.Room;
 import com.asi1.GameCard.game.service.RoomService;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/room")
 public class RoomController {
 
     private final RoomService roomService;
@@ -16,17 +16,17 @@ public class RoomController {
         this.roomService = roomService;
     }
 
-    @PostMapping("/create")
-    public ResponseEntity<?> createRoom(@RequestBody Room room) {
+    @PostMapping("/room/create")
+    public ResponseEntity<Room> createRoom(@RequestBody Room room) {
         Room createdRoom = roomService.createRoom(room);
         if (createdRoom != null) {
             return ResponseEntity.ok(createdRoom);
         } else {
-            return ResponseEntity.badRequest().body("Failed to create the room.");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @PostMapping("/join/{roomId}")
+    @PostMapping("/room/join/{roomId}")
     public ResponseEntity<?> joinRoom(@PathVariable Long roomId, @RequestParam Long userId, @RequestParam Long cardId) {
         boolean success = roomService.joinRoom(roomId, userId, cardId);
         if (success) {
@@ -36,7 +36,7 @@ public class RoomController {
         }
     }
 
-    @PostMapping("/start/{roomId}")
+    @PostMapping("/room/start/{roomId}")
     public ResponseEntity<?> startGame(@PathVariable Long roomId) {
         boolean success = roomService.startGame(roomId);
         if (success) {
