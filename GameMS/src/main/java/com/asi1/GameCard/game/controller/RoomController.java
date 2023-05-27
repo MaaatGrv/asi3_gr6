@@ -3,6 +3,8 @@ package com.asi1.GameCard.game.controller;
 import com.asi1.GameCard.game.model.Room;
 import com.asi1.GameCard.game.service.RoomService;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,15 @@ public class RoomController {
 
     public RoomController(RoomService roomService) {
         this.roomService = roomService;
+    }
+
+    @GetMapping("/room/list")
+    public ResponseEntity<List<Room>> getAllRooms() {
+        List<Room> rooms = roomService.getAllRooms();
+        if (!rooms.isEmpty()) {
+            return ResponseEntity.ok(rooms);
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PostMapping("/room/create")

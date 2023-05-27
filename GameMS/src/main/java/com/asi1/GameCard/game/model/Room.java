@@ -1,44 +1,48 @@
 package com.asi1.GameCard.game.model;
 
-import javax.persistence.*;
 import java.util.List;
+
+import javax.persistence.*;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 @Entity
 public class Room {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    private Long roomId;
 
-    private String name;
+    private String roomName;
+
     private double bet;
-    private Long creatorId;
 
-    @ElementCollection
-    private List<Long> playerIds;
+    private Long userID1;
 
-    @ElementCollection
-    private List<Long> cardIds;
+    private Long userID2;
 
-    private boolean isOpen;
+    private Long winner;
 
-    // getters and setters
+    private Long looser;
 
-    public Long getId() {
-        return id;
+    private boolean isOpen = true;
+
+    public Long getRoomId() {
+        return roomId;
     }
 
-    public Room setId(Long id) {
-        this.id = id;
+    public Room setRoomId(Long roomId) {
+        this.roomId = roomId;
         return this;
     }
 
-    public String getName() {
-        return name;
+    public String getRoomName() {
+        return roomName;
     }
 
-    public Room setName(String name) {
-        this.name = name;
+    public Room setRoomName(String roomName) {
+        this.roomName = roomName;
         return this;
     }
 
@@ -51,30 +55,39 @@ public class Room {
         return this;
     }
 
-    public Long getCreatorId() {
-        return creatorId;
+    public Long getUserID1() {
+        return userID1;
     }
 
-    public Room setCreatorId(Long creatorId) {
-        this.creatorId = creatorId;
+    public Room setUserID1(Long userID1) {
+        this.userID1 = userID1;
         return this;
     }
 
-    public List<Long> getPlayerIds() {
-        return playerIds;
+    public Long getUserID2() {
+        return userID2;
     }
 
-    public Room setPlayerIds(List<Long> playerIds) {
-        this.playerIds = playerIds;
+    public Room setUserID2(Long userID2) {
+        this.userID2 = userID2;
         return this;
     }
 
-    public List<Long> getCardIds() {
-        return cardIds;
+    public Long getWinner() {
+        return winner;
     }
 
-    public Room setCardIds(List<Long> cardIds) {
-        this.cardIds = cardIds;
+    public Room setWinner(Long winner) {
+        this.winner = winner;
+        return this;
+    }
+
+    public Long getLooser() {
+        return looser;
+    }
+
+    public Room setLooser(Long looser) {
+        this.looser = looser;
         return this;
     }
 
@@ -83,7 +96,15 @@ public class Room {
     }
 
     public Room setOpen(boolean open) {
-        isOpen = open;
+        this.isOpen = open;
         return this;
+    }
+
+    public List<Long> getPlayerIds() {
+        return null;
+    }
+
+    public List<Long> getCardIds() {
+        return null;
     }
 }

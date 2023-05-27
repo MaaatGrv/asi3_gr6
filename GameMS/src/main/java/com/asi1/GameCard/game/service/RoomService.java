@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Service
 public class RoomService {
@@ -61,5 +62,9 @@ public class RoomService {
             return true;
         }
         return false;
+    }
+
+    public List<Room> getAllRooms() {
+        return (List<Room>) roomRepository.findAll();
     }
 }
