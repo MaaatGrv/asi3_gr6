@@ -1,7 +1,8 @@
 package com.asi1.GameCard.game.controller;
 
+import com.asi1.GameCard.game.model.Game;
 import com.asi1.GameCard.game.service.GameService;
-
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,14 +15,31 @@ public class GameController {
         this.gameService = gameService;
     }
 
-    @PostMapping("/game/play/{roomId}")
-    public ResponseEntity<?> playGame(@PathVariable Long roomId) {
-        Long winnerUserId = gameService.playGame(roomId);
-        if (winnerUserId != null) {
-            return ResponseEntity.ok("The game has ended. The winner is user with ID: " + winnerUserId);
+    @PostMapping("/game/start/{roomId}")
+    public ResponseEntity<Game> startGame(@PathVariable Long roomId) {
+        Game game = gameService.startGame(roomId);
+        if (game != null) {
+            return ResponseEntity.ok(game);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping("/game/{gameId}")
+    public ResponseEntity<Game> getGameById(@PathVariable Long gameId) {
+        Game game = gameService.getGameById(gameId);
+        if (game != null) {
+            return ResponseEntity.ok(game);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("/game/attack/{gameId}")
+    public ResponseEntity<?> attack(@PathVariable Long gameId, @RequestParam Long userId) {
+        Game game = gameService.attack(gameId, userId);
+        if (game != null) {
+            return ResponseEntity.ok(game);
         } else {
-            return ResponseEntity.badRequest()
-                    .body("Failed to play the game. Ensure all players are ready and the game is started.");
+            return ResponseEntity.badRequest().body("Attack failed.");
         }
     }
 }

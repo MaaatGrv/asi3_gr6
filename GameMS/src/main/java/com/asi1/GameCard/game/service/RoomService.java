@@ -1,5 +1,6 @@
 package com.asi1.GameCard.game.service;
 
+import com.asi1.GameCard.game.model.Game;
 import com.asi1.GameCard.game.model.Room;
 import com.asi1.GameCard.game.repository.RoomRepository;
 import com.asi1.GameCard.game.dto.UserDto;
@@ -16,10 +17,12 @@ import java.util.List;
 public class RoomService {
 
     private final RoomRepository roomRepository;
+    private final GameService gameService;
     private final RestTemplate restTemplate;
 
-    public RoomService(RoomRepository roomRepository, RestTemplate restTemplate) {
+    public RoomService(RoomRepository roomRepository, GameService gameRepository, RestTemplate restTemplate) {
         this.roomRepository = roomRepository;
+        this.gameService = gameRepository;
         this.restTemplate = restTemplate;
     }
 
@@ -72,5 +75,9 @@ public class RoomService {
 
     public Room getRoomById(Long roomId) {
         return roomRepository.findById(roomId).orElse(null);
+    }
+
+    public Game getGameByRoomId(Long roomId) {
+        return gameService.getGameByRoomId(roomId);
     }
 }

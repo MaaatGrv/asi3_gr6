@@ -32,6 +32,8 @@ public class Room {
 
     private boolean isOpen = true;
 
+    private Long gameId;
+
     public Long getRoomId() {
         return roomId;
     }
@@ -119,6 +121,15 @@ public class Room {
 
     public Room setCardID2(Long cardID2) {
         this.cardID2 = cardID2;
+        return this;
+    }
+
+    public Long getGameId() {
+        return gameId;
+    }
+
+    public Room setGameId(Long gameId) {
+        this.gameId = gameId;
         return this;
     }
 }

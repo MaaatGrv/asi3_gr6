@@ -129,25 +129,6 @@ $(document).ready(function() {
         selectedCard = $("#tableContent tr.selected").data("card-id");
         sendSelectedCard();
     });
-
-    function joinRoom(roomId) {
-        var userId = getUserInfoFromServer().id; // Assurez-vous que cette fonction retourne le bon ID utilisateur
-        // Ici, nous n'avons pas encore sélectionné de carte, donc pas besoin de cardId
-        $.ajax({
-            url: "http://localhost:8090/room/join/" + roomId,
-            type: "POST",
-            data: {
-                userId: userId,
-            },
-            success: function(response) {
-                // Redirection vers la page select_card avec le roomId dans l'URL
-                window.location.href = '/select_card.html?roomId=' + roomId;
-            },
-            error: function(error) {
-                console.error("Error while joining room: ", error);
-            }
-        });
-    }
     
     function sendSelectedCard() {
         if (selectedCard !== null) {
@@ -162,7 +143,7 @@ $(document).ready(function() {
                 },
                 success: function(response) {
                     console.log("Selected card sent");
-                    window.location.href = '/play.html?roomId=' + roomId;
+                    window.location.href = '/waitCard.html?roomId=' + roomId;
                 },
                 error: function(error) {
                     console.error("Error while sending selected card: ", error);

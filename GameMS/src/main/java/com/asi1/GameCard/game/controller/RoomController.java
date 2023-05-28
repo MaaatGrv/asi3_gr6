@@ -66,4 +66,13 @@ public class RoomController {
             return ResponseEntity.badRequest().body("Failed to start the game.");
         }
     }
+
+    @GetMapping("/room/state/{roomId}")
+    public ResponseEntity<Room> getRoomState(@PathVariable Long roomId) {
+        Room room = roomService.getRoomById(roomId);
+        if (room != null) {
+            return ResponseEntity.ok(room);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
