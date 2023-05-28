@@ -38,7 +38,6 @@ function startGame(roomId) {
         type: "POST",
         success: function(game) {
             if (!(game.isOver)) {
-                console.log(game.currentPlayerId);
                 // Don't automatically attack
                 updateGame(game);
             } else {
@@ -57,7 +56,6 @@ function attack(gameId, userId) {
         url: "http://localhost:8090/game/attack/" + gameId + "?userId=" + userId,
         type: "POST",
         success: function(game) {
-            console.log("Game after attack: ", game);
             updateGame(game);
         },
         error: function(error) {
@@ -126,6 +124,7 @@ function loadGame(gameId) {
         async: false,
         success: function(response) {
             game = response;
+            console.log("Loaded game:", game);
         },
         error: function(error) {
             console.error("Error while fetching game details: ", error);
@@ -133,7 +132,6 @@ function loadGame(gameId) {
     });
     return game;
 }
-
 
 
 function updateRoom(room) {
@@ -160,14 +158,8 @@ function updateRoom(room) {
     updateCard(Card2, "#player2-card");
 }
 
-function updateGame(game) {
-    $("#player1-card-HP").text(game.cardID1CurrentHP);
-    $("#player1-card-Energy").text(game.cardID1Energy);
-    $("#player2-card-HP").text(game.cardID2CurrentHP);
-    $("#player2-card-Energy").text(game.cardID2Energy);
-}
 
-function updateCard(card, cardElementId) {
+function updateCard(card, cardElementId, currentHP, currentEnergy) {
     $(cardElementId).empty();
 
     let cardTemplate = `
@@ -177,13 +169,13 @@ function updateCard(card, cardElementId) {
                     <div class="ui grid">
                         <div class="three column row">
                             <div class="column">
-                                <i class="heart outline icon"></i><span id="${cardElementId}-HP">${card.hp}</span> 
+                                <i class="heart outline icon"></i><span id="${cardElementId}-HP">${currentHP}</span> 
                             </div>
                             <div class="column">
                                 <h5>${card.name}</h5>
                             </div>
                             <div class="column">
-                                <span id="${cardElementId}-Energy">${card.energy}</span> <i class="lightning icon"></i>
+                                <span id="${cardElementId}-Energy">${currentEnergy}</span> <i class="lightning icon"></i>
                             </div>
                         </div>
                     </div>
@@ -196,9 +188,9 @@ function updateCard(card, cardElementId) {
                     </div>
                 </div>
                 <div class="content">
-                    <i class="heart outline icon"></i><span id="${cardElementId}-HP2"> HP ${card.hp}</span> 
+                    <i class="heart outline icon"></i><span id="${cardElementId}-HP2"> HP ${currentHP}</span> 
                     <div class="right floated ">
-                        <span id="${cardElementId}-Energy2">Energy ${card.energy}</span>
+                        <span id="${cardElementId}-Energy2">Energy ${currentEnergy}</span>
                         <i class="lightning icon"></i>
                     </div>
                 </div>
@@ -217,6 +209,24 @@ function updateCard(card, cardElementId) {
     $(cardElementId).append(cardTemplate);
 }
 
+
+function updateGame(game) {
+    console.log("Update game called with game:", game);
+    
+    Promise.all([
+        getCardFromServer(game.cardID1),
+        getCardFromServer(game.cardID2)
+    ]).then(([card1, card2]) => {
+        updateCard(card1, "#player1-card", game.cardID1CurrentHP, game.cardID1Energy);
+        updateCard(card2, "#player2-card", game.cardID2CurrentHP, game.cardID2Energy);
+    }).then(() => {
+        console.log("Update game executed");
+    }).catch(error => {
+        console.error("Error during updating game: ", error);
+    });
+}
+
+
 $(document).ready(function() {
     userInfo = getUserInfoFromServer();
 
@@ -231,11 +241,25 @@ $(document).ready(function() {
     // Boucle du jeu (toutes les 15 secondes)
     setInterval(function() {
         gameInfo = loadGame(roomInfo.gameId);
-        if (roomInfo.userID1 == userInfo.id) {
-            console.log("Current player: ", gameInfo.currentPlayerId);
-            attack(gameInfo.gameId, gameInfo.currentPlayerId);
-            
+        if (gameInfo !== null && !(gameInfo.isOver)) {
+            if (roomInfo.userID1 == userInfo.id) {
+                console.log("Current player: ", gameInfo.currentPlayerId);
+                attack(gameInfo.gameId, gameInfo.currentPlayerId);
+                gameInfo = loadGame(roomInfo.gameId);
+            }
+            updateGame(gameInfo);
+        } else {
+            console.log("Game is over or could not be loaded");
+            console.log("Winner: ", gameInfo ? gameInfo.winnerId : "N/A");
+
+            // Display winner for the winner user
+            if (gameInfo.winnerId == userInfo.id) {
+                // Redirect to winner page
+                window.location.href = "http://localhost:8090/winner.html";
+            } else {
+                // Redirect to loser page
+                window.location.href = "http://localhost:8090/loser.html";
+            }
         }
-        updateGame(gameInfo);
-    }, 2000);
+    }, 15000);
 });
