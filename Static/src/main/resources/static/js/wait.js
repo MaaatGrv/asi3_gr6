@@ -1,14 +1,19 @@
+function getRoomIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('roomId');
+}
+
 var roomId = getRoomIdFromUrl(); // Cette fonction doit récupérer l'ID de la salle à partir de l'URL
 var checkRoomInterval;
 
 function checkRoom() {
     $.ajax({
-        url: "http://localhost:8090/room/status/" + roomId,
+        url: "http://localhost:8090/room/" + roomId,
         type: "GET",
         success: function(room) {
-            if (room.status == "complete") {
+            if (!(room.open)) {
                 clearInterval(checkRoomInterval);
-                window.location.href = '/select_card_to_play.html?roomId=' + roomId;
+                window.location.href = '/select_card.html?roomId=' + roomId;
             }
         },
         error: function(error) {

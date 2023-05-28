@@ -27,6 +27,15 @@ public class RoomController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @GetMapping("/room/{roomId}")
+    public ResponseEntity<Room> getRoomById(@PathVariable Long roomId) {
+        Room room = roomService.getRoomById(roomId);
+        if (room != null) {
+            return ResponseEntity.ok(room);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @PostMapping("/room/create")
     public ResponseEntity<Room> createRoom(@RequestBody Room room) {
         Room createdRoom = roomService.createRoom(room);

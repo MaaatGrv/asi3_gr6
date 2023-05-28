@@ -18,7 +18,6 @@ function getUserInfoFromServer() {
 function createRoom(userID) {
     var roomName = $("#room-name").val();
     var bet = parseInt($("#bet-amount").val(), 10);
-    console.log("Creating room with name: ", roomName, " and bet: ", bet, " and userID: ", userID);
     $.ajax({
         url: "http://localhost:8090/room/create",
         type: "POST",
@@ -29,7 +28,10 @@ function createRoom(userID) {
             "userID1": userID
         }),
         success: function(response) {
-            console.log("Room created: ", response);
+            // Récupération de l'id de la room créée
+            var roomId = response.roomId;
+            // Redirection vers la page select_card avec le roomId dans l'URL
+            window.location.href = '/wait.html?roomId=' + roomId;
         },
         error: function(error) {
             console.error("Error while creating room: ", error);
