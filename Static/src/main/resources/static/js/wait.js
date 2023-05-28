@@ -1,35 +1,22 @@
-$(document).ready(function() {
-    var roomId = getQueryVariable('roomId');
-    checkPlayers(roomId);
-});
+var roomId = getRoomIdFromUrl(); // Cette fonction doit récupérer l'ID de la salle à partir de l'URL
+var checkRoomInterval;
 
-function getQueryVariable(variable) {
-    var query = window.location.search.substring(1);
-    var vars = query.split("&");
-    for (var i=0;i<vars.length;i++) {
-        var pair = vars[i].split("=");
-        if (pair[0] == variable) {
-            return pair[1];
-        }
-    }
-    return(false);
-}
-
-function checkPlayers(roomId) {
+function checkRoom() {
     $.ajax({
-        url: "http://localhost:8090/game/check-players/" + roomId,
+        url: "http://localhost:8090/room/status/" + roomId,
         type: "GET",
-        success: function(response) {
-            if (response.allPlayersJoined) {
+        success: function(room) {
+            if (room.status == "complete") {
+                clearInterval(checkRoomInterval);
                 window.location.href = '/select_card_to_play.html?roomId=' + roomId;
-            } else {
-                setTimeout(function() {
-                    checkPlayers(roomId);
-                }, 3000);
             }
         },
         error: function(error) {
-            console.error("Error while checking players: ", error);
+            console.error("Error while checking room status: ", error);
         }
     });
 }
+
+$(document).ready(function() {
+    checkRoomInterval = setInterval(checkRoom, 1000);
+});

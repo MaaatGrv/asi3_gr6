@@ -38,8 +38,8 @@ public class RoomController {
     }
 
     @PostMapping("/room/join/{roomId}")
-    public ResponseEntity<?> joinRoom(@PathVariable Long roomId, @RequestParam Long userId, @RequestParam Long cardId) {
-        boolean success = roomService.joinRoom(roomId, userId, cardId);
+    public ResponseEntity<?> joinRoom(@PathVariable Long roomId, @RequestParam Long userId) {
+        boolean success = roomService.joinRoom(roomId, userId);
         if (success) {
             return ResponseEntity.ok("Joined the room successfully.");
         } else {
@@ -48,8 +48,9 @@ public class RoomController {
     }
 
     @PostMapping("/room/start/{roomId}")
-    public ResponseEntity<?> startGame(@PathVariable Long roomId) {
-        boolean success = roomService.startGame(roomId);
+    public ResponseEntity<?> startGame(@PathVariable Long roomId, @RequestParam Long cardId,
+            @RequestParam Long userId) {
+        boolean success = roomService.startGame(roomId, cardId, userId);
         if (success) {
             return ResponseEntity.ok("Game started successfully.");
         } else {

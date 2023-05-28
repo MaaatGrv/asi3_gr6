@@ -27,9 +27,9 @@ public class RoomService {
         return roomRepository.save(room);
     }
 
-    public boolean joinRoom(Long roomId, Long userId, Long cardId) {
+    public boolean joinRoom(Long roomId, Long userId) {
         Room room = roomRepository.findById(roomId).orElse(null);
-        if (room != null && room.isOpen() && room.getPlayerIds().size() < 2) {
+        if (room != null && room.isOpen() && room.getUserID2() == null) { // Make sure the second player slot is empty
             HttpHeaders headers = new HttpHeaders();
             headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
             HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
@@ -37,16 +37,12 @@ public class RoomService {
             ResponseEntity<UserDto> userResponse = restTemplate.exchange("http://localhost:8090/user/" + userId,
                     HttpMethod.GET,
                     entity, UserDto.class);
-            ResponseEntity<CardDto> cardResponse = restTemplate.exchange("http://localhost:8090/card/" + cardId,
-                    HttpMethod.GET,
-                    entity, CardDto.class);
 
-            if (userResponse.getStatusCode() == HttpStatus.OK && cardResponse.getStatusCode() == HttpStatus.OK) {
+            if (userResponse.getStatusCode() == HttpStatus.OK) {
                 UserDto user = userResponse.getBody();
-                CardDto card = cardResponse.getBody();
 
-                room.getPlayerIds().add(userId);
-                room.getCardIds().add(cardId);
+                room.setUserID2(userId); // Set the second player slot to this user
+                room.setOpen(false); // Close the room since it's now full
                 roomRepository.save(room);
                 return true;
             }
@@ -54,14 +50,20 @@ public class RoomService {
         return false;
     }
 
-    public boolean startGame(Long roomId) {
+    public boolean startGame(Long roomId, Long cardId, Long userId) {
         Room room = roomRepository.findById(roomId).orElse(null);
-        if (room != null && room.getPlayerIds().size() == 2) {
-            room.setOpen(false);
+        if (room != null && !room.isOpen() && room.getUserID1() != null && room.getUserID2() != null) {
+            if (room.getUserID1().equals(userId)) {
+                room.setCardID1(cardId);
+            } else if (room.getUserID2().equals(userId)) {
+                room.setCardID2(cardId);
+            } else {
+                return false; // User is not in this room
+            }
             roomRepository.save(room);
             return true;
         }
-        return false;
+        return false; // Room is not ready to start
     }
 
     public List<Room> getAllRooms() {

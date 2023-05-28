@@ -20,7 +20,11 @@ public class Room {
 
     private Long userID1;
 
+    private Long cardID1;
+
     private Long userID2;
+
+    private Long cardID2;
 
     private Long winner;
 
@@ -100,11 +104,21 @@ public class Room {
         return this;
     }
 
-    public List<Long> getPlayerIds() {
-        return null;
+    public Long getCardID1() {
+        return cardID1;
     }
 
-    public List<Long> getCardIds() {
-        return null;
+    public Room setCardID1(Long cardID1) {
+        this.cardID1 = cardID1;
+        return this;
+    }
+
+    public Long getCardID2() {
+        return cardID2;
+    }
+
+    public Room setCardID2(Long cardID2) {
+        this.cardID2 = cardID2;
+        return this;
     }
 }
