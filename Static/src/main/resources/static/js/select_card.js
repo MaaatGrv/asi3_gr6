@@ -14,6 +14,21 @@ function getUserInfoFromServer() {
     return userInfo;
 }
 
+function getRoomName() {
+    var roomId = getRoomIdFromUrl();
+    $.ajax({
+        url: "http://localhost:8090/room/" + roomId,
+        type: "GET",
+        success: function(room) {
+            updateRoomName(room.roomName);
+        },
+        error: function(error) {
+            console.error("Error while fetching room info: ", error);
+        }
+    });
+}
+
+
 function getRoomIdFromUrl() {
     const urlParams = new URLSearchParams(window.location.search);
     return urlParams.get('roomId');
@@ -98,7 +113,12 @@ function updateCard(card) {
     $("#cardPriceId").text(card.price + "$");
 }
 
+function updateRoomName(roomName) {
+    document.getElementById('roomName').textContent = "Play Room " + roomName;
+}
+
 $(document).ready(function() {
+    getRoomName();
     $("#card").load("/part/card-full.html", function() {
         loadUserCards();
     });

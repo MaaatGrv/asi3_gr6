@@ -19,6 +19,22 @@ function getUserInfoFromServer() {
     return userInfo;
 }
 
+function getRoomInfoFromServer(roomId) {
+    var roomInfo = null;
+    $.ajax({
+        url: "http://localhost:8090/room/" + roomId,
+        type: "GET",
+        async: false,
+        success: function(response) {
+            roomInfo = response;
+        },
+        error: function(error) {
+            console.error("Error while fetching room info: ", error);
+        }
+    });
+    return roomInfo;
+}
+
 function fetchRoomList() {
     $.ajax({
         url: "http://localhost:8090/room/list",
@@ -70,20 +86,30 @@ function fetchUser(userId, callback) {
 }
 
 function joinRoom(roomId) {
-    var userId = getUserInfoFromServer().id; // Assurez-vous que cette fonction retourne le bon ID utilisateur
+    var userId = getUserInfoFromServer().id;
     // Ici, nous n'avons pas encore sélectionné de carte, donc pas besoin de cardId
-    $.ajax({
-        url: "http://localhost:8090/room/join/" + roomId,
-        type: "POST",
-        data: {
-            userId: userId,
-        },
-        success: function(response) {
-            // Redirection vers la page select_card avec le roomId dans l'URL
-            window.location.href = '/select_card.html?roomId=' + roomId;
-        },
-        error: function(error) {
-            console.error("Error while joining room: ", error);
-        }
-    });
+
+    // Onv vérifie que l'utilisateur a assez d'argent pour rejoindre la room
+    var userInfo = getUserInfoFromServer();
+    var roomInfo = getRoomInfoFromServer(roomId);
+    var bet = roomInfo.bet;
+    if (userInfo.account < bet) {
+        alert("You don't have enough money to join this room");
+        return;
+    } else {
+        $.ajax({
+            url: "http://localhost:8090/room/join/" + roomId,
+            type: "POST",
+            data: {
+                userId: userId,
+            },
+            success: function(response) {
+                // Redirection vers la page select_card avec le roomId dans l'URL
+                window.location.href = '/select_card.html?roomId=' + roomId;
+            },
+            error: function(error) {
+                console.error("Error while joining room: ", error);
+            }
+        });
+    }
 }

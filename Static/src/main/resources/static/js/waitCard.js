@@ -11,6 +11,7 @@ function checkRoom() {
         url: "http://localhost:8090/room/" + roomId,
         type: "GET",
         success: function(room) {
+            updateRoomName(room.roomName); // mise à jour du nom de la salle
             if (room.cardID1 != null && room.cardID2 != null) {
                 clearInterval(checkRoomInterval);
                 window.location.href = '/game.html?roomId=' + roomId;
@@ -20,6 +21,10 @@ function checkRoom() {
             console.error("Error while checking room status: ", error);
         }
     });
+}
+
+function updateRoomName(roomName) {
+    document.getElementById('playRoom').textContent = "Play Room " + roomName;
 }
 
 $(document).ready(function() {

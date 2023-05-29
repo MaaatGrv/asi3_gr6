@@ -23,17 +23,17 @@ public class User {
     @Column(nullable = false)
     private String pwd;
 
-    private double account;
+    private double account = 1000;
     private String lastName;
     private String surName;
     private String email;
 
-    // Ajoutez l'annotation @ElementCollection pour stocker la liste des
-    // identifiants de cartes dans une table séparée
+    // On ajoute 5 cartes par défaut à l'utilisateur pour qu'il puisse jouer (1, 2,
+    // 34, 35, 36)
     @ElementCollection
     @CollectionTable(name = "user_cards", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "card_id")
-    private List<Long> cardList;
+    private List<Long> cardList = List.of(1L, 2L, 34L, 35L, 36L);
 
     // Constructeurs, getters et setters
 

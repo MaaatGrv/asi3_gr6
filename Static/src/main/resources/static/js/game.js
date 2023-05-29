@@ -135,7 +135,7 @@ function loadGame(gameId) {
 
 
 function updateRoom(room) {
-    // Get User Infor from server
+    // Get User Info from server
     var User1 = getUserInfoFromServer();
     // Get Other User from room
     var userID2 = null;
@@ -156,7 +156,10 @@ function updateRoom(room) {
 
     updateCard(Card1, "#player1-card");
     updateCard(Card2, "#player2-card");
+
+    updateRoomName(room.roomName); // add this line
 }
+
 
 
 function updateCard(card, cardElementId, currentHP, currentEnergy) {
@@ -240,6 +243,10 @@ function updateUserAccount(userId, newAccountValue) {
     });
 }
 
+function updateRoomName(roomName) {
+    document.getElementById('playRoom').textContent = "Play Room " + roomName;
+}
+
 $(document).ready(function() {
     userInfo = getUserInfoFromServer();
 
@@ -275,5 +282,5 @@ $(document).ready(function() {
             }  
             window.location.href = "http://localhost:8090/end_game.html?gameId=" + gameInfo.gameId + "&bet=" + roomInfo.bet;
         }
-    }, 1000);
+    }, 15000);
 });
