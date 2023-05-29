@@ -28,12 +28,13 @@ public class User {
     private String surName;
     private String email;
 
-    // On ajoute 5 cartes par défaut à l'utilisateur pour qu'il puisse jouer (1, 2,
-    // 34, 35, 36)
+    // On ajoute aléatoirement 5 cartes par défaut à l'utilisateur pour qu'il puisse
+    // jouer (1, 2,
+    // 3, 4 , 5 ou 6)
     @ElementCollection
     @CollectionTable(name = "user_cards", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "card_id")
-    private List<Long> cardList = List.of(1L, 2L, 34L, 35L, 36L);
+    private List<Long> cardList = List.of(1L, 2L, 3L, 4L, 5L);
 
     // Constructeurs, getters et setters
 

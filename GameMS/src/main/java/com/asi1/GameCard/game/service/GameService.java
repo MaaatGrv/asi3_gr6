@@ -43,7 +43,8 @@ public class GameService {
         }
 
         // Retrieve users' cards
-        String cardServiceUrl = "http://localhost:8090/card"; // Change this to your actual Card API Gateway URL
+        String cardServiceUrl = "http://host.docker.internal:8090/card"; // Change this to your actual Card API Gateway
+                                                                         // URL
 
         ResponseEntity<CardDto> card1Response = restTemplate.getForEntity(cardServiceUrl + "/" + room.getCardID1(),
                 CardDto.class);
@@ -164,7 +165,8 @@ public class GameService {
     }
 
     private CardDto getCard(Long cardId) {
-        ResponseEntity<CardDto> cardResponse = restTemplate.getForEntity("http://localhost:8090/card/" + cardId,
+        ResponseEntity<CardDto> cardResponse = restTemplate.getForEntity(
+                "http://host.docker.internal:8090/card/" + cardId,
                 CardDto.class);
         return cardResponse.getBody();
     }

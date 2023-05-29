@@ -19,7 +19,7 @@ public class UserClient {
         // Remplacez `user-service-url` par l'URL de votre service utilisateur.
         // Assurez-vous que le service utilisateur expose une API à cette URL qui
         // renvoie un UserDto.
-        UserDto user = restTemplate.getForObject("http://localhost:8090/user/" + userId, UserDto.class);
+        UserDto user = restTemplate.getForObject("http://host.docker.internal:8090/user/" + userId, UserDto.class);
         return Optional.ofNullable(user);
     }
 }

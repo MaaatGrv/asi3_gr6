@@ -27,10 +27,10 @@ public class TradingService {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-        ResponseEntity<UserDto> userResponse = restTemplate.exchange("http://localhost:8090/user/" + userId,
+        ResponseEntity<UserDto> userResponse = restTemplate.exchange("http://host.docker.internal:8090/user/" + userId,
                 HttpMethod.GET,
                 entity, UserDto.class);
-        ResponseEntity<CardDto> cardResponse = restTemplate.exchange("http://localhost:8090/card/" + cardId,
+        ResponseEntity<CardDto> cardResponse = restTemplate.exchange("http://host.docker.internal:8090/card/" + cardId,
                 HttpMethod.GET,
                 entity, CardDto.class);
 
@@ -43,9 +43,9 @@ public class TradingService {
                 user.getCardList().add(card.getId());
                 card.setUserId(userId);
 
-                restTemplate.exchange("http://localhost:8090/user/" + user.getId(), HttpMethod.PUT,
+                restTemplate.exchange("http://host.docker.internal:8090/user/" + user.getId(), HttpMethod.PUT,
                         new HttpEntity<>(user, headers), UserDto.class);
-                restTemplate.exchange("http://localhost:8090/card/" + card.getId(), HttpMethod.PUT,
+                restTemplate.exchange("http://host.docker.internal:8090/card/" + card.getId(), HttpMethod.PUT,
                         new HttpEntity<>(card, headers), CardDto.class);
 
                 Trading transaction = new Trading(userId, cardId, "buy");
@@ -61,10 +61,10 @@ public class TradingService {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-        ResponseEntity<UserDto> userResponse = restTemplate.exchange("http://localhost:8090/user/" + userId,
+        ResponseEntity<UserDto> userResponse = restTemplate.exchange("http://host.docker.internal:8090/user/" + userId,
                 HttpMethod.GET,
                 entity, UserDto.class);
-        ResponseEntity<CardDto> cardResponse = restTemplate.exchange("http://localhost:8090/card/" + cardId,
+        ResponseEntity<CardDto> cardResponse = restTemplate.exchange("http://host.docker.internal:8090/card/" + cardId,
                 HttpMethod.GET,
                 entity, CardDto.class);
 
@@ -77,9 +77,9 @@ public class TradingService {
                 user.getCardList().remove(card.getId());
                 card.setUserId(0L);
 
-                restTemplate.exchange("http://localhost:8090/user/" + user.getId(), HttpMethod.PUT,
+                restTemplate.exchange("http://host.docker.internal:8090/user/" + user.getId(), HttpMethod.PUT,
                         new HttpEntity<>(user, headers), UserDto.class);
-                restTemplate.exchange("http://localhost:8090/card/" + card.getId(), HttpMethod.PUT,
+                restTemplate.exchange("http://host.docker.internal:8090/card/" + card.getId(), HttpMethod.PUT,
                         new HttpEntity<>(card, headers), CardDto.class);
 
                 Trading transaction = new Trading(userId, cardId, "sell");

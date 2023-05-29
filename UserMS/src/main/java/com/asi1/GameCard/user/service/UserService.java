@@ -79,7 +79,7 @@ public class UserService {
 
     public List<CardDto> getCardsByUserId(Long userId) {
         ResponseEntity<List<CardDto>> response = restTemplate.exchange(
-                "http://localhost:8090/card/user/" + userId,
+                "http://host.docker.internal:8090/card/user/" + userId,
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<CardDto>>() {

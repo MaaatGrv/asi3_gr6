@@ -26,7 +26,7 @@ public class AuthService {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-        ResponseEntity<Auth> response = restTemplate.exchange("http://localhost:8090/user/" + userId,
+        ResponseEntity<Auth> response = restTemplate.exchange("http://host.docker.internal:8090/user/" + userId,
                 HttpMethod.GET,
                 entity, Auth.class);
 
@@ -42,7 +42,7 @@ public class AuthService {
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-        ResponseEntity<Auth> response = restTemplate.exchange("http://localhost:8090/user/login/" + login,
+        ResponseEntity<Auth> response = restTemplate.exchange("http://host.docker.internal:8090/user/login/" + login,
                 HttpMethod.GET,
                 entity, Auth.class);
 

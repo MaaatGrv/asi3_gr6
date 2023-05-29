@@ -37,7 +37,8 @@ public class RoomService {
             headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
             HttpEntity<String> entity = new HttpEntity<>("parameters", headers);
 
-            ResponseEntity<UserDto> userResponse = restTemplate.exchange("http://localhost:8090/user/" + userId,
+            ResponseEntity<UserDto> userResponse = restTemplate.exchange(
+                    "http://host.docker.internal:8090/user/" + userId,
                     HttpMethod.GET,
                     entity, UserDto.class);
 

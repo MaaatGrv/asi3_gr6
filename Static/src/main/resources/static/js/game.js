@@ -142,8 +142,13 @@ function updateRoom(room) {
 
     if (User1.id == room.userID1) {
         userID2 = room.userID2;
+        var Card1 = getCardFromServer(room.cardID1);
+        var Card2 = getCardFromServer(room.cardID2);
     } else {
         userID2 = room.userID1;
+        var Card1 = getCardFromServer(room.cardID2);
+        var Card2 = getCardFromServer(room.cardID1);
+
     }
 
     var User2 = getUserInfoFromRoom(userID2);
@@ -151,11 +156,8 @@ function updateRoom(room) {
     $("#player1-name").text(User1.login);
     $("#player2-name").text(User2.login);
 
-    var Card1 = getCardFromServer(room.cardID1);
-    var Card2 = getCardFromServer(room.cardID2);
-
-    updateCard(Card1, "#player1-card");
     updateCard(Card2, "#player2-card");
+    updateCard(Card1, "#player1-card");
 
     updateRoomName(room.roomName); // add this line
 }
@@ -215,13 +217,21 @@ function updateCard(card, cardElementId, currentHP, currentEnergy) {
 
 function updateGame(game) {
     console.log("Update game called with game:", game);
-    
+    var User1 = getUserInfoFromServer();
+    var room = getRoomInfoFromServer(game.roomId);
     Promise.all([
         getCardFromServer(game.cardID1),
         getCardFromServer(game.cardID2)
     ]).then(([card1, card2]) => {
-        updateCard(card1, "#player1-card", game.cardID1CurrentHP, game.cardID1Energy);
-        updateCard(card2, "#player2-card", game.cardID2CurrentHP, game.cardID2Energy);
+            if (User1.id == room.userID1) {
+                updateCard(card2, "#player2-card", game.cardID2CurrentHP, game.cardID2Energy);
+                updateCard(card1, "#player1-card", game.cardID1CurrentHP, game.cardID1Energy);
+            } else {
+                userID2 = room.userID1;
+                updateCard(card1, "#player1-card", game.cardID1CurrentHP, game.cardID1Energy);
+                updateCard(card2, "#player2-card", game.cardID2CurrentHP, game.cardID2Energy);
+            }
+
     }).then(() => {
         console.log("Update game executed");
     }).catch(error => {
