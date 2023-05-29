@@ -78,6 +78,15 @@ services:
     networks: 
       - app-network
 
+  loadbalancer:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    ports:
+      - 80:80
+    networks:
+      - app-network
+
 networks: 
   app-network:
     driver: bridge
