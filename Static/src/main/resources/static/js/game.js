@@ -226,6 +226,19 @@ function updateGame(game) {
     });
 }
 
+function updateUserAccount(userId, newAccountValue) {
+    $.ajax({
+        url: `http://localhost:8090/user/${userId}/add-money`,
+        type: "PUT",
+        data: { amount: newAccountValue },
+        success: function(response) {
+            console.log("Account updated successfully");
+        },
+        error: function(error) {
+            console.log("Error while updating account: ", error);
+        }
+    });
+}
 
 $(document).ready(function() {
     userInfo = getUserInfoFromServer();
@@ -234,14 +247,18 @@ $(document).ready(function() {
     roomInfo = getRoomInfoFromServer(roomId);
     loadRoom(roomId);
 
-    if (roomInfo.gameId == null) {
+    if (roomInfo.userID1 == userInfo.id && roomInfo.gameId == null) {
         startGame(roomId);
-    } 
+    }
+
+    while (roomInfo.gameId == null) {
+        roomInfo = getRoomInfoFromServer(roomId);
+    }
 
     // Boucle du jeu (toutes les 15 secondes)
     setInterval(function() {
         gameInfo = loadGame(roomInfo.gameId);
-        if (gameInfo !== null && !(gameInfo.isOver)) {
+        if (gameInfo != null && !(gameInfo.isOver)) {
             if (roomInfo.userID1 == userInfo.id) {
                 console.log("Current player: ", gameInfo.currentPlayerId);
                 attack(gameInfo.gameId, gameInfo.currentPlayerId);
@@ -251,15 +268,12 @@ $(document).ready(function() {
         } else {
             console.log("Game is over or could not be loaded");
             console.log("Winner: ", gameInfo ? gameInfo.winnerId : "N/A");
-
-            // Display winner for the winner user
-            if (gameInfo.winnerId == userInfo.id) {
-                // Redirect to winner page
-                window.location.href = "http://localhost:8090/winner.html";
+            if (gameInfo.winnerId === userInfo.id) {
+                updateUserAccount(userInfo.id, roomInfo.bet);
             } else {
-                // Redirect to loser page
-                window.location.href = "http://localhost:8090/loser.html";
-            }
+                updateUserAccount(userInfo.id, -roomInfo.bet);
+            }  
+            window.location.href = "http://localhost:8090/end_game.html?gameId=" + gameInfo.gameId + "&bet=" + roomInfo.bet;
         }
-    }, 15000);
+    }, 1000);
 });

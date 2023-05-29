@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>End of Game</title>
+
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/semantic-ui-css/semantic.min.css">
+        <link rel="stylesheet" type="text/css" href="css/custom.css">
+
+    </head>
+    <body>
+        <div class="ui clearing segment">
+            <div class="ui menu">
+                <div class="header item" onclick="window.location.href = '/home.html'">
+                    GameCard
+                </div>
+                <h3 class="ui center aligned header">
+                    <i class="gamepad icon"></i>
+                    <div class="content">
+                        GAME
+                        <div class="sub header">Play the game with your cards</div>
+                    </div>
+                </h3>
+                <div class="right menu">
+                    <div class="item">
+                        <div class="ui label">
+                            Crédits restants
+                            <div class="detail"><span id="user-account"></span>$</div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <div class="ui label">
+                            Utilisateur
+                            <div class="detail"><span id="user-login"></span></div>
+                        </div>
+                    </div>
+                    <div class="item">
+                        <button class="ui button" id="logout-btn">Déconnexion</button>
+                    </div>          
+                </div>
+            </div>
+        </div>
+        <div class="ui grid centered">
+            <div class="row">
+                <div id="endGameMessage" style="text-align: center; font-size: 64px; margin: 5%; margin-top: 20%;"></div>
+            </div>
+            <div class="row">
+                <div id="betMessage" style="text-align: center; font-size: 30px; margin: 5%;"></div>
+            </div>
+            <div class="row">
+                <div id="endGameButton" style="text-align: center; margin: 5%;">
+                    <button class="ui button" onclick="window.location.href = '/home.html'">Retour a l'accueil</button>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/semantic-ui-css/semantic.js"></script>
+        <script src="/js/end_game.js"></script>
+    </body>
+</html>

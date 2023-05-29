@@ -6,6 +6,7 @@ import com.asi1.GameCard.game.repository.GameRepository;
 import com.asi1.GameCard.game.repository.RoomRepository;
 import com.asi1.GameCard.game.model.Room;
 
+import java.io.Console;
 import java.util.Random;
 
 import org.springframework.http.ResponseEntity;
@@ -138,8 +139,14 @@ public class GameService {
 
         // Check if the game is over
         if (game.getCardID1CurrentHP() <= 0 || game.getCardID2CurrentHP() <= 0) {
-            // If the game is over, set the winner
-            game.setWinnerId(game.getCardID1CurrentHP() > 0 ? game.getCardID1() : game.getCardID2());
+            if (game.getCardID1CurrentHP() <= 0) {
+                // If card 1 is dead, player 2 wins
+                game.setWinnerId(room.getUserID2());
+            }
+            if (game.getCardID2CurrentHP() <= 0) {
+                // If card 2 is dead, player 1 wins
+                game.setWinnerId(room.getUserID1());
+            }
             game.setIsOver(true);
         } else {
             // If the game is not over, switch the current player
