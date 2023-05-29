@@ -1,0 +1,83 @@
+version: '3.8'
+
+services:
+  authservice:
+    build: 
+      context: ./AuthMS
+      dockerfile: Dockerfile
+    environment:
+      - SERVER_PORT=8081
+    ports:
+      - 8081:8081
+    networks: 
+      - app-network
+
+  userservice:
+    build:
+      context: ./UserMS
+      dockerfile: Dockerfile
+    environment:
+      - SERVER_PORT=8082
+    ports:
+      - 8082:8082
+    networks: 
+      - app-network
+
+  cardservice:
+    build:
+      context: ./CardMS
+      dockerfile: Dockerfile
+    environment:
+      - SERVER_PORT=8083
+    ports:
+      - 8083:8083
+    networks: 
+      - app-network
+  
+  tradingservice:
+    build:
+      context: ./TradingMS
+      dockerfile: Dockerfile
+    environment:
+      - SERVER_PORT=8084
+    ports:
+      - 8084:8084
+    networks: 
+      - app-network
+
+  gameservice:
+    build:
+      context: ./GameMS
+      dockerfile: Dockerfile
+    environment:
+      - SERVER_PORT=8086
+    ports:
+      - 8086:8086
+    networks: 
+      - app-network
+
+  staticservice:
+    build:
+      context: ./Static
+      dockerfile: Dockerfile
+    environment:
+      - SERVER_PORT=8085
+    ports:
+      - 8085:8085
+    networks: 
+      - app-network
+
+  gateway:
+    build:
+      context: ./Gateway
+      dockerfile: Dockerfile
+    environment:
+      - SERVER_PORT=8090
+    ports:
+      - 8090:8090
+    networks: 
+      - app-network
+
+networks: 
+  app-network:
+    driver: bridge
